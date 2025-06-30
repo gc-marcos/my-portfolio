@@ -1,9 +1,8 @@
 import Resume from "@/components/Resume";
 
-export default function PageResume() {
-    return (
-        <div className="pt-10">
-            <Resume />
-        </div>
-    )
-}
+const PageResume = () => (
+    <div className="pt-10">
+        <Resume />
+    </div>
+);
+export default PageResume;

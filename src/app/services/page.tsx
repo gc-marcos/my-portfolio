@@ -1,9 +1,8 @@
 import Services from "@/components/Services";
 
-export default function PageServices() {
-    return (
-        <div className="pt-10">
-            <Services />
-        </div>
-    )
-}
+const PageServices = () => (
+    <div className="pt-10">
+        <Services />
+    </div>
+);
+export default PageServices;
