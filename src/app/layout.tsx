@@ -14,12 +14,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${jetBrainsMono.variable}`}>
       <body className={jetBrainsMono.className}>
         <NavBar />
-        <main className="min-h-screen">
-          {children}
-        </main>
+        <main className="min-h-screen">{children}</main>
       </body>
     </html>
   );
