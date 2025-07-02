@@ -7,21 +7,23 @@ import CountUp from "./CountUp";
 
 export default function Hero() {
     return (
-        <section className="min-h-screen bg-gray-950 text-white pt-20">
+        <section className="min-h-screen bg-gray-950 text-white pt-5">
             <div className="max-w-5xl mx-auto px-6 py-12">
                 <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-8 lg:gap-16">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5 }}>
+                        transition={{ duration: 0.5 }}
+                        className="flex flex-col"
+                    >
                         <span className="text-gray-400 mb-4 block text-center lg:text-left">
-                            Estágiario
+                            Estagiário
                         </span>
-                        <h1 className="text-5xl front-bold mb-4 text-center lg:text-left">
+                        <h1 className="text-5xl font-bold mb-4 text-center lg:text-left">
                             Olá, Eu Sou
-                            <span className="block text-emerald-400 mt2">Marcos Carvalho</span>
+                            <span className="block text-emerald-400 mt-2">Marcos Carvalho</span>
                         </h1>
-                        <p className="text-gray-400 mb-8 text-center lg:text-left">
+                        <p className="text-gray-400 mb-8 text-center lg:text-left max-w-lg">
                             Olá! Sou Marcos, estudante de Informática para Negócios com foco em desenvolvimento frontend e mobile.
 
                             Tenho experiência acadêmica com HTML, CSS, JavaScript, React Native, Node.js e outras tecnologias voltadas para criar soluções úteis, acessíveis e com impacto real na vida das pessoas.
@@ -35,10 +37,10 @@ export default function Hero() {
                                 rel="noopener noreferrer"
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
-                                className="w-full lg:w-auto bg-emerald-400 text-gray-900 px-6 py-3 rounded-full flex items-center justify-center gap-2 hover:bg-emerald-300"
+                                className="w-full lg:w-auto bg-emerald-400 text-gray-900 px-6 py-3 rounded-full flex items-center justify-center gap-2 hover:bg-emerald-300 transition-colors"
                             >
                                 <Download size={20} />
-                                Download
+                                Download CV
                             </motion.a>
                             <div className="flex items-center gap-4">
                                 {socialLinks.map((social, index) => (
@@ -47,15 +49,15 @@ export default function Hero() {
                                         href={social.href}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="w-10 h10 boder boder-gray-800 rounded-fill flex items-center justify-center text-gray-400 hover:text-emerald-400 hover:boder-emerald-400 transition-colors"
+                                        className="w-10 h-10 border border-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:text-emerald-400 hover:border-emerald-400 transition-colors"
                                         whileHover={{ scale: 1.1 }}
                                         whileTap={{ scale: 0.9 }}
+                                        aria-label={`Link para ${social.name}`}
                                     >
                                         {social.icon}
                                     </motion.a>
                                 ))}
                             </div>
-
                         </div>
                     </motion.div>
 
@@ -66,7 +68,7 @@ export default function Hero() {
                             duration: 0.8,
                             ease: "easeOut"
                         }}
-                        className="relative flex-1"
+                        className="relative flex-1 flex justify-center"
                     >
                         <div className="w-[350px] h-[350px] relative mx-auto">
                             <motion.div
@@ -102,25 +104,24 @@ export default function Hero() {
                                     ease: "linear",
                                     repeat: Infinity
                                 }}
-                                className="absolute inset-[-20px] rounded-full boder-2 border-dashed border-emerald-400/5"
+                                className="absolute inset-[-20px] rounded-full border-2 border-dashed border-emerald-400/5"
                             />
 
                             <Image
                                 src="/avatar.jpg"
-                                alt="Image Avatar"
+                                alt="Foto de perfil de Marcos Carvalho"
                                 fill
                                 className="object-cover rounded-full p-4"
+                                priority
                             />
-
                         </div>
-
                     </motion.div>
                 </div>
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 }}
-                    className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20"
+                    className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-10"
                 >
                     {stats.map((stat, index) => (
                         <div key={index} className="flex items-center gap-4">
