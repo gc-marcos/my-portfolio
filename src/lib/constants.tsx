@@ -170,13 +170,12 @@ export const skillsData = [
 export const projects = [
     {
         number: "01",
-        title: "App Monitoramento de Crises",
-        description:
-            "Aplicativo para smartwatch que monitora sinais vitais (frequência cardíaca e pressão arterial) e envia alertas com geolocalização em caso de emergência, oferecendo autonomia e segurança para pessoas com doenças crônicas.",
-        image: "/work/thumb1.png",
-        technologies: ["React Native", "JavaScript", "Node.js", "Git"],
-        demoLink: "",
-        githubLink: "https://github.com/gc-marcos/app-monitoramento-crises",
+        title: "Portfolio Pessoal",
+        description: "Website portfolio moderno e responsivo desenvolvido com Next.js para apresentar projetos, habilidades e experiência profissional. Conta com interface limpa e otimizada, utilizando as melhores práticas de desenvolvimento frontend.",
+        image: "/work/portfolio.png",
+        technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Vercel"],
+        demoLink: "https://my-portfolio-gc-marcos.vercel.app",
+        githubLink: "https://github.com/gc-marcos/my-portfolio",
     },
     {
         number: "02",
