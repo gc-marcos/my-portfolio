@@ -1,46 +1,58 @@
 "use client"
 
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import emailjs from '@emailjs/browser'
-import { motion } from "framer-motion"
-import { contactInfo } from "@/lib/constants"
-import { Send } from "lucide-react"
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import emailjs from "@emailjs/browser";
+import { motion } from "framer-motion";
+import { Send } from "lucide-react";
 
+// Dados de contato com ícones e estilos
+import { contactInfo } from "@/lib/constants";
+
+// Tipagem dos dados do formulário
 type FormData = {
-    firstName: string
-    lastName: string
-    email: string
-    phone: string
-    service: string
-    message: string
-}
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    service: string;
+    message: string;
+};
 
 export default function Contact() {
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const { register, handleSubmit, formState, reset } = useForm<FormData>();
 
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+    } = useForm<FormData>();
+
+    // Envio de formulário via EmailJS
     const onSubmit = async (data: FormData) => {
         setIsSubmitting(true);
         try {
             await emailjs.send(
-                'service_okuffl1',
-                'template_v03kzyd',
+                "service_okuffl1",
+                "template_v03kzyd",
                 data,
-                'zYFm-qCgwU9wQ1TFw',
-            )
+                "zYFm-qCgwU9wQ1TFw"
+            );
             reset();
-            alert('Mensagem Enviada com Sucesso!')
+            alert("Mensagem Enviada com Sucesso!");
         } catch (error) {
-            console.error(error)
-            alert('Erro ao enviar mensagem. Tente novamente.')
+            console.error(error); // Melhor usar ferramenta como Sentry em produção
+            alert("Erro ao enviar mensagem. Tente novamente.");
         }
         setIsSubmitting(false);
-    }
+    };
+
     return (
-        <section className="min-h-screen bg-gray-950 text-white pt-10">
+        <section className="min-h-screen bg-gray-950 text-white pt-5">
             <div className="max-w-5xl mx-auto px-6 py-12">
-                <div className="grid grid-col-1 lg:grid-cols-2 gap-8 lg:gap-16 lg:flex-row-reverse">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 lg:flex-row-reverse">
+                    {/* Bloco com informações de contato */}
                     <motion.div
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
@@ -53,9 +65,7 @@ export default function Contact() {
                                 animate={{ opacity: 1, x: 0 }}
                                 className="flex items-start gap-4"
                             >
-                                <div className={`p-4 rounded-xl ${info.bg}`}>
-                                    {info.icon}
-                                </div>
+                                <div className={`p-4 rounded-xl ${info.bg}`}>{info.icon}</div>
                                 <div>
                                     <h3 className="text-gray-400 mb-1">{info.title}</h3>
                                     <p className="text-xl">{info.content}</p>
@@ -63,6 +73,8 @@ export default function Contact() {
                             </motion.div>
                         ))}
                     </motion.div>
+
+                    {/* Formulário de contato */}
                     <motion.div
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
@@ -72,8 +84,14 @@ export default function Contact() {
                             Vamos Trabalhar Juntos!
                         </h2>
                         <p className="text-gray-400 mb-8">
-                        Sou Marcos, desenvolvedor frontend & mobile focado em criar soluções que gerem impacto social e valor real aos usuários. Se você busca alguém comprometido com inovação, acessibilidade e entrega ágil, envie sua mensagem — seja para estágio, projeto freelance ou parceria de longo prazo. Respondo em até 24h. Vamos transformar ideias em resultados!
+                            Sou Marcos, desenvolvedor frontend & mobile focado em criar
+                            soluções que gerem impacto social e valor real aos usuários. Se
+                            você busca alguém comprometido com inovação, acessibilidade e
+                            entrega ágil, envie sua mensagem — seja para estágio, projeto
+                            freelance ou parceria de longo prazo. Respondo em até 24h. Vamos
+                            transformar ideias em resultados!
                         </p>
+
                         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
@@ -82,9 +100,11 @@ export default function Contact() {
                                         placeholder="Nome"
                                         className="w-full bg-gray-800 rounded-lg p-3 text-white border border-gray-700 focus:border-emerald-400 focus:outline-none"
                                     />
-                                    {formState.errors.firstName &&
-                                        <span className="text-red-500 text-sm">Nome é obrigatório!</span>
-                                    }
+                                    {errors.firstName && (
+                                        <span className="text-red-500 text-sm">
+                                            Nome é obrigatório!
+                                        </span>
+                                    )}
                                 </div>
                                 <div>
                                     <input
@@ -92,21 +112,29 @@ export default function Contact() {
                                         placeholder="Sobrenome"
                                         className="w-full bg-gray-800 rounded-lg p-3 text-white border border-gray-700 focus:border-emerald-400 focus:outline-none"
                                     />
-                                    {formState.errors.lastName &&
-                                        <span className="text-red-500 text-sm">Sobrenome é obrigatório!</span>
-                                    }
+                                    {errors.lastName && (
+                                        <span className="text-red-500 text-sm">
+                                            Sobrenome é obrigatório!
+                                        </span>
+                                    )}
                                 </div>
                             </div>
+
                             <input
-                                {...register("email", { required: true, pattern: /^\S+@\S+$/i })}
+                                {...register("email", {
+                                    required: true,
+                                    pattern: /^\S+@\S+$/i,
+                                })}
                                 placeholder="Email"
                                 className="w-full bg-gray-800 rounded-lg p-3 text-white border border-gray-700 focus:border-emerald-400 focus:outline-none"
                             />
+
                             <input
                                 {...register("phone")}
                                 placeholder="Telefone"
                                 className="w-full bg-gray-800 rounded-lg p-3 text-white border border-gray-700 focus:border-emerald-400 focus:outline-none"
                             />
+
                             <select
                                 {...register("service")}
                                 className="w-full bg-gray-800 rounded-lg p-3 text-white border border-gray-700 focus:border-emerald-400 focus:outline-none"
@@ -114,6 +142,7 @@ export default function Contact() {
                                 <option value="estagio">Estágio</option>
                                 <option value="junior">Junior</option>
                             </select>
+
                             <textarea
                                 {...register("message", { required: true })}
                                 placeholder="Digite sua mensagem aqui."
@@ -127,7 +156,7 @@ export default function Contact() {
                                 disabled={isSubmitting}
                                 className="bg-emerald-400 text-gray-900 px-8 py-3 rounded-full font-medium hover:bg-emerald-300 transition-colors disabled:opacity-50 flex items-center gap-2"
                             >
-                                {isSubmitting ? 'Enviando...' : 'Enviar Mensagem'}
+                                {isSubmitting ? "Enviando..." : "Enviar Mensagem"}
                                 <Send size={20} />
                             </motion.button>
                         </form>
@@ -135,5 +164,5 @@ export default function Contact() {
                 </div>
             </div>
         </section>
-    )
+    );
 }

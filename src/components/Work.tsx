@@ -1,120 +1,87 @@
 "use client"
 
-import { projects } from "@/lib/constants";
-import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUpRight, ChevronLeft, ChevronRight, Github } from "lucide-react";
-import Image from "next/image";
-import { useState } from "react";
+import { projects } from "@/lib/constants"
+import { AnimatePresence, motion } from "framer-motion"
+import { ArrowUpRight, ChevronLeft, ChevronRight, Github } from "lucide-react"
+import Image from "next/image"
+import { useState } from "react"
 
-export default function Work(){
-    const [currentIndex, setCurrentIndex] = useState(0);
+export default function Work() {
+    const [currentIndex, setCurrentIndex] = useState(0)
 
-    const nextProject = () => {
-        setCurrentIndex((prev) => (prev + 1) % projects.length)
+    const handlePrev = () => {
+        setCurrentIndex((prev) => (prev === 0 ? projects.length - 1 : prev - 1))
     }
 
-    const prevProject = () => {
-        setCurrentIndex((prev) => (prev - 1 + projects.length) % projects.length)
+    const handleNext = () => {
+        setCurrentIndex((prev) => (prev === projects.length - 1 ? 0 : prev + 1))
     }
 
-    const project = projects[currentIndex];
+    return (
+        <section className="min-h-screen flex items-center justify-center bg-black text-white px-4 py-8">
+            <div className="max-w-5xl w-full space-y-8 overflow-hidden">
+                <div className="flex justify-between items-center">
+                    <button onClick={handlePrev} className="p-2 hover:text-emerald-400">
+                        <ChevronLeft size={32} />
+                    </button>
+                    <h2 className="text-2xl font-bold text-center">Meus Projetos</h2>
+                    <button onClick={handleNext} className="p-2 hover:text-emerald-400">
+                        <ChevronRight size={32} />
+                    </button>
+                </div>
 
-    return(
-        <section className="min-h-screen bg-gray-900 text-white pt -10">
-            <div className="max-w-5xl mx-auto px-6 py-12">
                 <AnimatePresence mode="wait">
                     <motion.div
-                    key={currentIndex}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center"
+                        key={projects[currentIndex].title}
+                        initial={{ opacity: 0, x: 100 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -100 }}
+                        transition={{ duration: 0.5 }}
+                        className="bg-gray-900 border border-gray-800 rounded-xl p-6 shadow-md"
                     >
-                        {/* TEXTO */}
-                        <div>
-                            <div className="text-8xl font-bold text-gray-700">
-                                {project.number}
-                            </div>
-                            <h2 className="text-4xl font-bold mb-4">
-                                {project.title}
-                            </h2>
-                            <p className="text-gray-400 mb-6">
-                                {project.description}
-                            </p>
-                            <div className="flex flex-wrap gap-2 mb-8">
-                                {project.technologies.map((tech, index) =>(
-                                    <span
-                                    key={index}
-                                    className="px-3 py-1 bg-emerald-400/10 text-emerald-400 rounded-full text-sm font-medium inline-block"
-                                    >
-                                        {tech}
-                                    </span>
-                                ))}
-                            </div>
-                            <div className="flex gap-4">
-                                <motion.a
-                                href={project.demoLink}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                                className="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center hover:bg-gray-800 transition-colors"
-                                >
-                                    <ArrowUpRight size={20} />                              
-                                </motion.a>
-                                <motion.a
-                                href={project.githubLink}
-                                target="_blank"
-                                rel="noopener noreferror"
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                                className="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center hover:bg-gray-800 transition-colors"
-                                >
-                                    <Github size={20} />                                    
-                                </motion.a>
-                            </div>
-
-                        </div>
-                        {/* IMAGEM */}
-                        <motion.div
-                        whileHover={{ scale: 1.2 }}
-                        className="relative aspect-[4/3] rounded-xl overflow-hidden bg-gray-900"
-                        >
+                        <div className="flex flex-col md:flex-row gap-6 items-center">
                             <Image
-                            src={project.image}
-                            alt={project.title}
-                            fill
-                            className="object-cover"
+                                src={projects[currentIndex].image}
+                                alt={projects[currentIndex].title}
+                                width={400}
+                                height={300}
+                                className="rounded-lg object-cover max-h-[300px]"
                             />
-                        </motion.div>
+
+                            <div className="flex-1 space-y-4">
+                                <h3 className="text-xl font-semibold">
+                                    {projects[currentIndex].title}
+                                </h3>
+                                <p className="text-gray-400">
+                                    {projects[currentIndex].description}
+                                </p>
+                                <div className="flex gap-4">
+                                    {projects[currentIndex].demoLink && (
+                                        <a
+                                            href={projects[currentIndex].demoLink}
+                                            target="_blank"
+                                            className="flex items-center gap-1 hover:text-emerald-400 transition"
+                                        >
+                                            <ArrowUpRight size={18} />
+                                            Demo
+                                        </a>
+                                    )}
+                                    {projects[currentIndex].githubLink && (
+                                        <a
+                                            href={projects[currentIndex].githubLink}
+                                            target="_blank"
+                                            className="flex items-center gap-1 hover:text-emerald-400 transition"
+                                        >
+                                            <Github size={18} />
+                                            GitHub
+                                        </a>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
                     </motion.div>
-
                 </AnimatePresence>
-
-                {/*CONTROLE  SLIDE*/}
-                <div className="flex justify-end gap-4 mt-8">
-                    <motion.button
-                    onClick={prevProject}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="w-12 h-12 bg-emerald-400 rounded-xl flex items-center justify-center text-gray-900 hover:bg-emerald-300 transition-colors"
-                    >
-                        <ChevronLeft size={24} />
-                    </motion.button>
-
-                    <motion.button
-                    onClick={nextProject}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="w-12 h-12 bg-emerald-400 rounded-xl flex items-center justify-center text-gray-900 hover:bg-emerald-300 transition-colors"
-                    >
-                        <ChevronRight size={24} />
-                    </motion.button>
-
-                </div>
             </div>
         </section>
-
-
     )
 }
