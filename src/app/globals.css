@@ -10,7 +10,7 @@
   --font-mono: monospace;
 }
 
-/* Suporte a tema escuro com media query */
+/* Tema escuro com media query */
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -18,8 +18,12 @@
   }
 }
 
-/* Estilo global */
+/* Estilos base globais */
 @layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
   body {
     margin: 0;
     padding: 0;
