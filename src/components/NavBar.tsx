@@ -79,8 +79,9 @@ export default function NavBar() {
                 <motion.div
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="md:hidden bg-gray-900 px-4 py-4"
+                    className="md:hidden w-full bg-gray-900 px-6 py-6 fixed top-16 left-0 z-40"
                 >
+
                     {menuItems.map((item, index) => (
                         <Link
                             key={index}
