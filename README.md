@@ -10,7 +10,7 @@ Bem-vindo ao meu portfólio profissional, onde apresento meus projetos, tecnolog
 Sou Marcos Carvalho, estudante de Informática para Negócios com foco em desenvolvimento de soluções tecnológicas úteis, acessíveis e com impacto real. Este portfólio reflete minha dedicação em transformar desafios em oportunidades por meio da tecnologia.
 
 Acesse o projeto em produção:  
-👉 **[www.marcosgc1.com](https://www.marcosgc2.com)**
+👉 **[Abrir o site!](https://marcoscarvalho.netlify.app/)**
 
 ## 🛠️ Tecnologias Utilizadas
 
