@@ -23,9 +23,9 @@ export const socialLinks = [
 /* Estatísticas */
 export const stats = [
     { number: "3", text: "Experiência Acadêmica" },
-    { number: "20", text: "Projetos" },
+    { number: "23", text: "Projetos" },
     { number: "6", text: "Tecnologias" },
-    { number: "63", text: "Commits de código" },
+    { number: "95", text: "Commits de código" },
 ];
 
 /* Itens de navegação */
@@ -174,7 +174,7 @@ export const projects = [
         description: "Website portfolio moderno e responsivo desenvolvido com Next.js para apresentar projetos, habilidades e experiência profissional. Conta com interface limpa e otimizada, utilizando as melhores práticas de desenvolvimento frontend.",
         image: "/work/portfolio.png",
         technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Vercel"],
-        demoLink: "https://my-portfolio-gc-marcos.vercel.app",
+        demoLink: "https://marcoscarvalho.netlify.app/",
         githubLink: "https://github.com/gc-marcos/my-portfolio",
     },
     {
