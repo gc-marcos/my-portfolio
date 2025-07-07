@@ -20,7 +20,7 @@ Acesse o projeto em produção:
 - **Framer Motion**
 - **Lucide Icons**
 - **EmailJS**
-- **Vercel (Deploy)**
+- **Netlify (Deploy)**
 
 ## 📁 Estrutura do Projeto
 
