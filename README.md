@@ -10,7 +10,7 @@ Bem-vindo ao meu portfólio profissional, onde apresento meus projetos, tecnolog
 Sou Marcos Carvalho, estudante de Informática para Negócios com foco em desenvolvimento de soluções tecnológicas úteis, acessíveis e com impacto real. Este portfólio reflete minha dedicação em transformar desafios em oportunidades por meio da tecnologia.
 
 Acesse o projeto em produção:  
-👉 **[Abrir o site!](https://marcoscarvalho.netlify.app/)**
+👉 **[Abrir Portifólio!](https://marcoscarvalho.netlify.app/)**
 
 ## 🛠️ Tecnologias Utilizadas
 
@@ -55,16 +55,9 @@ npm run dev
 
 Acesse em: `http://localhost:3000`
 
-## 🌱 Próximas melhorias
-
-* Dark Mode com toggle
-* SEO aprimorado
-* Integração com CMS (ex: Notion ou Sanity)
-* Tradução multilíngue (i18n)
-
 ## 📬 Contato
 
-📧 [marcosgcdev@gmail.com](mailto:marcosgcdev@gmail.com)
+📧 [Email](mailto:gcmarcoss@gmail.com)
 🔗 [LinkedIn](https://www.linkedin.com/in/gcmarcos)
 
 ---
