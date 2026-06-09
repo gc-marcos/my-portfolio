@@ -2,264 +2,346 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { ExperienceTabs, resumeData, skillsData } from "@/lib/constants";
 
+const skillCategories = [
+  {
+    label: "Frontend",
+    color: "#7C3AED",
+    skills: [
+      { name: "React / Next.js", level: 80 },
+      { name: "TypeScript", level: 70 },
+      { name: "HTML & CSS", level: 90 },
+      { name: "Tailwind CSS", level: 80 },
+      { name: "Framer Motion", level: 65 },
+    ],
+  },
+  {
+    label: "Mobile",
+    color: "#F97316",
+    skills: [
+      { name: "React Native", level: 75 },
+      { name: "Expo", level: 70 },
+      { name: "Ionic / Angular", level: 60 },
+      { name: "Android (Java)", level: 65 },
+    ],
+  },
+  {
+    label: "Backend & Dados",
+    color: "#22D3EE",
+    skills: [
+      { name: "Node.js / Express", level: 60 },
+      { name: "Python", level: 55 },
+      { name: "SQLite / PostgreSQL", level: 60 },
+      { name: "Git & GitHub", level: 85 },
+    ],
+  },
+];
+
+function ProgressBar({ level, color, delay }: { level: number; color: string; delay: number }) {
+  const prefersReduced = useReducedMotion();
+
+  return (
+    <div
+      className="h-1.5 w-full rounded-full overflow-hidden"
+      style={{ background: "rgba(255,255,255,0.06)" }}
+    >
+      <motion.div
+        className="h-full rounded-full"
+        style={{ background: `linear-gradient(90deg, ${color}99, ${color})` }}
+        initial={{ width: 0 }}
+        animate={{ width: prefersReduced ? `${level}%` : 0 }}
+        whileInView={{ width: `${level}%` }}
+        viewport={{ once: true }}
+        transition={{ duration: prefersReduced ? 0 : 1, delay, ease: [0.22, 1, 0.36, 1] }}
+      />
+    </div>
+  );
+}
+
 export default function Resume() {
-    const [activeTab, setActiveTab] = useState("experience");
+  const [activeTab, setActiveTab] = useState("experience");
+  const prefersReduced = useReducedMotion();
 
-    // Renderiza conteúdo baseado na aba ativa
+  const renderContent = () => {
+    switch (activeTab) {
+      case "experience":
+        return (
+          <motion.div
+            className="grid md:grid-cols-2 gap-8"
+            initial="initial"
+            animate="animate"
+            variants={{ animate: { transition: { staggerChildren: prefersReduced ? 0 : 0.1 } } }}
+          >
+            {resumeData.experience.map((exp, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="relative"
+                style={{
+                  borderLeft: "1px solid rgba(124,58,237,0.2)",
+                  paddingLeft: "1.25rem",
+                }}
+              >
+                <div
+                  className="absolute left-0 top-2 w-2 h-2 rounded-full -translate-x-[5px]"
+                  style={{ background: "#7C3AED" }}
+                />
+                <span className="text-sm font-medium" style={{ color: "#9D5CF6" }}>
+                  {exp.period}
+                </span>
+                <h3 className="text-lg font-bold mt-1 text-white">{exp.title}</h3>
+                <p className="text-sm font-medium mt-0.5" style={{ color: "#22D3EE" }}>
+                  {exp.company}
+                </p>
+                <p className="text-slate-400 mt-2 text-sm leading-relaxed">{exp.description}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        );
 
-    const renderContent = () => {
-        switch (activeTab) {
-            case "experience":
-                return (
-                    <motion.div 
-                        className="grid md:grid-cols-2 gap-8"
-                        initial="initial"
-                        animate="animate"
-                        variants={{
-                            animate: {
-                                transition: {
-                                    staggerChildren: 0.1
-                                }
-                            }
-                        }}
-                    >
-                        {resumeData.experience.map((experience, index) => (
-                            <motion.div
-                                key={index}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: index * 0.1 }}
-                                className="relative pl-8 before:absolute before:left-0 before:top-2 before:w-2 before:h-2 before:bg-emerald-400 before:rounded-full"
-                            >
-                                <span className="text-emerald-500 text-sm font-medium">
-                                    {experience.period}
-                                </span>
-                                <h3 className="text-xl font-bold mt-2">{experience.title}</h3>
-                                <p className="text-emerald-400 mt-1">{experience.company}</p>
-                                <p className="text-gray-400 mt-2">{experience.description}</p>
-                            </motion.div>
-                        ))}
-                    </motion.div>
-                );
+      case "education":
+        return (
+          <motion.div
+            className="grid md:grid-cols-2 gap-8"
+            initial="initial"
+            animate="animate"
+            variants={{ animate: { transition: { staggerChildren: prefersReduced ? 0 : 0.1 } } }}
+          >
+            {resumeData.education.map((edu, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="relative"
+                style={{ borderLeft: "1px solid rgba(34,211,238,0.2)", paddingLeft: "1.25rem" }}
+              >
+                <div
+                  className="absolute left-0 top-2 w-2 h-2 rounded-full -translate-x-[5px]"
+                  style={{ background: "#22D3EE" }}
+                />
+                <span className="text-sm font-medium" style={{ color: "#22D3EE" }}>
+                  {edu.period}
+                </span>
+                <h3 className="text-lg font-bold mt-1 text-white">{edu.title}</h3>
+                <p className="text-sm font-medium mt-0.5" style={{ color: "#9D5CF6" }}>
+                  {edu.institution}
+                </p>
+                <p className="text-slate-400 mt-2 text-sm leading-relaxed">{edu.description}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        );
 
-            case "education":
-                return (
-                    <motion.div 
-                        className="grid md:grid-cols-2 gap-8"
-                        initial="initial"
-                        animate="animate"
-                        variants={{
-                            animate: {
-                                transition: {
-                                    staggerChildren: 0.1
-                                }
-                            }
-                        }}
-                    >
-                        {resumeData.education.map((education, index) => (
-                            <motion.div
-                                key={index}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: index * 0.1 }}
-                                className="relative pl-8 before:absolute before:left-0 before:top-2 before:w-2 before:h-2 before:bg-emerald-400 before:rounded-full"
-                            >
-                                <span className="text-emerald-500 text-sm font-medium">
-                                    {education.period}
-                                </span>
-                                <h3 className="text-xl font-bold mt-2">{education.title}</h3>
-                                <p className="text-emerald-400 mt-1">{education.institution}</p>
-                                <p className="text-gray-400 mt-2">{education.description}</p>
-                            </motion.div>
-                        ))}
-                    </motion.div>
-                );
-
-            case "skills":
-                return (
-                    <motion.div 
-                        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 mt-10 lg:mt-12"
-                        initial="initial"
-                        animate="animate"
-                        variants={{
-                            animate: {
-                                transition: {
-                                    staggerChildren: 0.1
-                                }
-                            }
-                        }}
-                    >
-                        {skillsData.map((skill, index) => (
-                            <motion.div
-                                key={index}
-                                initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                                animate={{ opacity: 1, scale: 1, y: 0 }}
-                                transition={{
-                                    type: "spring",
-                                    stiffness: 100,
-                                    damping: 10,
-                                    delay: index * 0.1
-                                }}
-                                whileHover={{ 
-                                    y: -8,
-                                    scale: 1.05,
-                                    transition: {
-                                        type: "spring",
-                                        stiffness: 300,
-                                        damping: 15
-                                    }
-                                }}
-                                className="group relative bg-gray-900 p-8 rounded-xl border border-gray-800 hover:border-emerald-400/50 transition-all duration-300 overflow-hidden"
-                            >
-                                {/* Efeito de brilho no hover */}
-                                <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/0 via-emerald-400/5 to-emerald-400/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out" />
-                                
-                                <div className="relative z-10 flex flex-col items-center">
-                                    <motion.div
-                                        whileHover={{ rotate: [0, -5, 5, 0] }}
-                                        transition={{ duration: 0.5 }}
-                                        className="mb-4"
-                                    >
-                                        <Image
-                                            src={skill.icon}
-                                            alt={skill.name}
-                                            width={96}
-                                            height={96}
-                                            className="w-16 h-16 object-contain filter group-hover:drop-shadow-[0_0_8px_rgba(52,211,153,0.3)] transition-all duration-300"
-                                        />
-                                    </motion.div>
-                                    
-                                    {/* Nome da skill com fade-in no hover */}
-                                    <motion.h4
-                                        className="text-sm font-medium text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                                        initial={{ y: 10 }}
-                                        animate={{ y: 0 }}
-                                    >
-                                        {skill.name}
-                                    </motion.h4>
-                                </div>
-                                
-                                {/* Barra de progresso animada */}
-                                <motion.div 
-                                    className="absolute bottom-0 left-0 h-1 bg-emerald-400/50 rounded-b-xl"
-                                    initial={{ scaleX: 0 }}
-                                    whileHover={{ scaleX: 1 }}
-                                    transition={{ duration: 0.3 }}
-                                    style={{ transformOrigin: "left" }}
-                                />
-                            </motion.div>
-                        ))}
-                    </motion.div>
-                );
-
-            case "about":
-                return (
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5 }}
-                        className="grid md:grid-cols-2 gap-8"
-                    >
-                        <motion.div 
-                            className="bg-gray-900 p-6 rounded-xl"
-                            whileHover={{ scale: 1.02 }}
-                            transition={{ type: "spring", stiffness: 300 }}
-                        >
-                            <h3 className="text-xl font-bold mb-4">Sobre Mim</h3>
-                            <p className="text-gray-400">{resumeData.about.description}</p>
-                        </motion.div>
-
-                        <motion.div 
-                            className="bg-gray-900 p-6 rounded-xl"
-                            whileHover={{ scale: 1.02 }}
-                            transition={{ type: "spring", stiffness: 300 }}
-                        >
-                            <h3 className="text-xl font-bold mb-4">Interesses</h3>
-                            <div className="flex flex-wrap gap-2">
-                                {resumeData.about.interests.map((interest, index) => (
-                                    <motion.span
-                                        key={index}
-                                        className="px-3 py-1 bg-gray-800 text-emerald-400 rounded-full text-sm cursor-default"
-                                        whileHover={{ scale: 1.1 }}
-                                        transition={{ type: "spring", stiffness: 400 }}
-                                    >
-                                        {interest}
-                                    </motion.span>
-                                ))}
-                            </div>
-                        </motion.div>
-                    </motion.div>
-                );
-
-            default:
-                return null;
-        }
-    };
-
-    return (
-        <section className="min-h-screen bg-gray-950 text-white pt-2">
-            <div className="w-full max-w-5xl mx-auto px-6 py-12">
-                <div className="grid lg:grid-cols-[200px_1fr] gap-12">
-                    {/* Sidebar com tabs */}
-                    <div>
-                        <motion.h2
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="text-3xl font-bold mb-8"
-                        >
-                            Por que me contratar?
-                        </motion.h2>
-
-                        <div className="space-y-3">
-                            {ExperienceTabs.map((tab, index) => (
-                                <motion.button
-                                    key={tab.id}
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: index * 0.1 }}
-                                    onClick={() => setActiveTab(tab.id)}
-                                    whileHover={{ x: 4 }}
-                                    whileTap={{ scale: 0.98 }}
-                                    className={`w-full text-left p-4 rounded-md font-medium transition-colors ${
-                                        tab.id === activeTab
-                                            ? "bg-emerald-400 text-gray-900"
-                                            : "bg-gray-900 text-gray-400 hover:text-white"
-                                    }`}
-                                >
-                                    {tab.title}
-                                </motion.button>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Conteúdo principal */}
-                    <div>
-                        <motion.h2
-                            key={activeTab}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="text-3xl font-bold mb-8"
-                        >
-                            {ExperienceTabs.find((tab) => tab.id === activeTab)?.title}
-                        </motion.h2>
-
-                        <AnimatePresence mode="wait">
-                            <motion.div
-                                key={activeTab}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -20 }}
-                                transition={{ duration: 0.3 }}
-                            >
-                                {renderContent()}
-                            </motion.div>
-                        </AnimatePresence>
-                    </div>
+      case "skills":
+        return (
+          <motion.div
+            className="space-y-8"
+            initial="initial"
+            animate="animate"
+            variants={{ animate: { transition: { staggerChildren: prefersReduced ? 0 : 0.12 } } }}
+          >
+            {skillCategories.map((cat, catIdx) => (
+              <motion.div
+                key={catIdx}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: catIdx * 0.12 }}
+                className="p-6 rounded-2xl"
+                style={{
+                  background: "rgba(17,24,39,0.7)",
+                  border: `1px solid ${cat.color}20`,
+                  backdropFilter: "blur(8px)",
+                }}
+              >
+                <div className="flex items-center gap-2 mb-5">
+                  <div
+                    className="w-2 h-5 rounded-full"
+                    style={{ background: cat.color }}
+                  />
+                  <h3 className="font-bold text-base" style={{ color: cat.color }}>
+                    {cat.label}
+                  </h3>
                 </div>
-            </div>
-        </section>
-    );
+                <div className="space-y-4">
+                  {cat.skills.map((skill, skillIdx) => (
+                    <div key={skillIdx}>
+                      <div className="flex justify-between items-center mb-1.5">
+                        <span className="text-sm text-slate-300">{skill.name}</span>
+                        <span className="text-xs font-mono" style={{ color: `${cat.color}99` }}>
+                          {skill.level}%
+                        </span>
+                      </div>
+                      <ProgressBar
+                        level={skill.level}
+                        color={cat.color}
+                        delay={catIdx * 0.12 + skillIdx * 0.08}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="p-6 rounded-2xl"
+              style={{
+                background: "rgba(17,24,39,0.7)",
+                border: "1px solid rgba(255,255,255,0.06)",
+              }}
+            >
+              <h3 className="font-bold text-sm text-slate-400 mb-4 uppercase tracking-widest">
+                Ícones de Tecnologias
+              </h3>
+              <div className="flex flex-wrap gap-3">
+                {skillsData.map((skill, i) => (
+                  <motion.div
+                    key={i}
+                    whileHover={{ y: prefersReduced ? 0 : -4, scale: 1.05 }}
+                    className="flex flex-col items-center gap-1 p-3 rounded-xl"
+                    style={{ background: "rgba(124,58,237,0.06)", border: "1px solid rgba(124,58,237,0.1)" }}
+                  >
+                    <Image src={skill.icon} alt={skill.name} width={32} height={32} className="w-8 h-8 object-contain" />
+                    <span className="text-xs text-slate-500">{skill.name}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          </motion.div>
+        );
+
+      case "about":
+        return (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="grid md:grid-cols-2 gap-6"
+          >
+            <motion.div
+              whileHover={{ y: prefersReduced ? 0 : -4 }}
+              className="p-6 rounded-xl"
+              style={{ background: "#111827", border: "1px solid rgba(124,58,237,0.15)" }}
+            >
+              <h3 className="text-lg font-bold mb-4 text-white">Sobre Mim</h3>
+              <p className="text-slate-400 text-sm leading-relaxed">{resumeData.about.description}</p>
+            </motion.div>
+            <motion.div
+              whileHover={{ y: prefersReduced ? 0 : -4 }}
+              className="p-6 rounded-xl"
+              style={{ background: "#111827", border: "1px solid rgba(34,211,238,0.15)" }}
+            >
+              <h3 className="text-lg font-bold mb-4 text-white">Interesses</h3>
+              <div className="flex flex-wrap gap-2">
+                {resumeData.about.interests.map((interest, index) => (
+                  <motion.span
+                    key={index}
+                    whileHover={{ scale: 1.06 }}
+                    className="px-3 py-1 rounded-full text-xs font-medium"
+                    style={{
+                      background: "rgba(34,211,238,0.08)",
+                      color: "#22D3EE",
+                      border: "1px solid rgba(34,211,238,0.2)",
+                    }}
+                  >
+                    {interest}
+                  </motion.span>
+                ))}
+              </div>
+            </motion.div>
+          </motion.div>
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <section
+      className="min-h-screen py-24 px-4 relative"
+      style={{ backgroundColor: "#0B0F19" }}
+    >
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 40% 30% at 80% 60%, rgba(34,211,238,0.05) 0%, transparent 60%)",
+        }}
+      />
+
+      <div className="relative z-10 w-full max-w-5xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-14"
+        >
+          <div className="flex items-center gap-3 mb-4">
+            <div className="h-px w-8 bg-gradient-to-r from-cyan-400 to-purple-500" />
+            <span className="text-sm font-medium text-cyan-400 tracking-widest uppercase">
+              Experiência
+            </span>
+          </div>
+          <h2 className="text-4xl lg:text-5xl font-bold">
+            Por que me <span className="gradient-text">contratar?</span>
+          </h2>
+        </motion.div>
+
+        <div className="grid lg:grid-cols-[220px_1fr] gap-10">
+          <div className="space-y-2">
+            {ExperienceTabs.map((tab, index) => (
+              <motion.button
+                key={tab.id}
+                initial={{ opacity: 0, x: -15 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.08 }}
+                onClick={() => setActiveTab(tab.id)}
+                whileHover={{ x: prefersReduced ? 0 : 4 }}
+                whileTap={{ scale: 0.98 }}
+                className="w-full text-left px-5 py-3.5 rounded-xl font-medium text-sm transition-all duration-200"
+                style={
+                  tab.id === activeTab
+                    ? {
+                        background: "linear-gradient(135deg, #7C3AED, #22D3EE)",
+                        color: "white",
+                        boxShadow: "0 4px 20px rgba(124,58,237,0.3)",
+                      }
+                    : {
+                        background: "#111827",
+                        color: "#94A3B8",
+                        border: "1px solid rgba(124,58,237,0.1)",
+                      }
+                }
+              >
+                {tab.title}
+              </motion.button>
+            ))}
+          </div>
+
+          <div>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeTab}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -16 }}
+                transition={{ duration: 0.28 }}
+              >
+                {renderContent()}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }

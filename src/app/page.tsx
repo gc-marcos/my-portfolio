@@ -1,6 +1,11 @@
 import Hero from "@/components/Hero";
+import AiChat from "@/components/AiChat";
 
-// Página inicial com destaque principal (Hero)
-const Home = () => <Hero />;
-
-export default Home;
+export default function Home() {
+  return (
+    <>
+      <Hero />
+      <AiChat />
+    </>
+  );
+}

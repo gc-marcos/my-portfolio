@@ -1,111 +1,156 @@
 "use client";
 
 import { menuItems } from "@/lib/constants";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function NavBar() {
-    const pathname = usePathname();
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-    // Abre conversa no WhatsApp
-    const openWhatsApp = () => {
-        window.open(
-            "https://wa.me/5511996840013?text=Olá%20Marcos,%20vim%20pelo%20seu%20site%20e%20gostaria%20de%20conversar!",
-            "_blank"
-        );
-    };
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 30);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-    return (
-        <nav className="fixed top-0 w-full z-50 bg-gray-950/80 backdrop-blur-sm">
-            <div className="max-w-5xl mx-auto px-4 sm:px-6">
-                <div className="flex items-center justify-between h-16 overflow-visible px-6">
-                    {/* Logo do site */}
-                    <Link href="/">
-                        <motion.div
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            className="text-2xl font-bold text-white"
-                        >
-                            <span className="text-emerald-400">Marcos Carvalho</span>
-                        </motion.div>
-                    </Link>
-
-                    {/* Menu para telas médias ou maiores */}
-                    <div className="hidden md:flex items-center space-x-8">
-                        {menuItems.map((item, index) => (
-                            <motion.div key={index} whileHover={{ y: -2 }} whileTap={{ scale: 0.95 }}>
-                                <Link
-                                    href={item.path}
-                                    className={`${pathname === item.path ? "text-emerald-400" : "text-gray-300"
-                                        } hover:text-emerald-400 transition-colors relative group`}
-                                >
-                                    {item.title}
-                                    {pathname === item.path && (
-                                        <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-emerald-400" />
-                                    )}
-                                </Link>
-                            </motion.div>
-                        ))}
-
-                        {/* Botão Me Contrate (Desktop) */}
-                        <motion.button
-                            onClick={openWhatsApp}
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="bg-emerald-400 text-gray-900 px-6 py-2 rounded-full font-medium hover:bg-emerald-300 transition-colors"
-                        >
-                            Me Contrate
-                        </motion.button>
-                    </div>
-
-                    {/* Botão de menu para mobile */}
-                    <button
-                        className="md:hidden text-white"
-                        aria-label="Abrir menu"
-                        aria-expanded={isMenuOpen}
-                        onClick={() => setIsMenuOpen(!isMenuOpen)}
-                    >
-                        {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-                    </button>
-                </div>
-            </div>
-
-            {/* Menu Mobile */}
-            {isMenuOpen && (
-                <motion.div
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="md:hidden w-full bg-gray-900 px-6 py-6 fixed top-16 left-0 z-40"
-                >
-
-                    {menuItems.map((item, index) => (
-                        <Link
-                            key={index}
-                            href={item.path}
-                            className={`block py-3 ${pathname === item.path ? "text-emerald-400" : "text-gray-300"
-                                }`}
-                            onClick={() => setIsMenuOpen(false)}
-                        >
-                            {item.title}
-                        </Link>
-                    ))}
-
-                    {/* Botão Me Contrate (Mobile) */}
-                    <button
-                        onClick={() => {
-                            openWhatsApp();
-                            setIsMenuOpen(false);
-                        }}
-                        className="w-full bg-emerald-400 text-gray-900 px-6 py-2 rounded-full font-medium mt-4 hover:bg-emerald-300 transition-colors"
-                    >
-                        Me Contrate
-                    </button>
-                </motion.div>
-            )}
-        </nav>
+  const openWhatsApp = () => {
+    window.open(
+      "https://wa.me/5511996840013?text=Olá%20Marcos,%20vim%20pelo%20seu%20site%20e%20gostaria%20de%20conversar!",
+      "_blank"
     );
+  };
+
+  return (
+    <nav
+      className="fixed top-0 w-full z-50 transition-all duration-500"
+      style={
+        scrolled
+          ? {
+              background: "rgba(11,15,25,0.75)",
+              backdropFilter: "blur(20px)",
+              WebkitBackdropFilter: "blur(20px)",
+              borderBottom: "1px solid rgba(124,58,237,0.12)",
+              boxShadow: "0 4px 30px rgba(0,0,0,0.3)",
+            }
+          : { background: "transparent" }
+      }
+    >
+      <div className="max-w-5xl mx-auto px-4 sm:px-6">
+        <div className="flex items-center justify-between h-16 px-2">
+          <Link href="/">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="text-lg font-bold tracking-tight"
+            >
+              <span className="gradient-text">Marcos</span>
+              <span className="text-white/70"> Carvalho</span>
+            </motion.div>
+          </Link>
+
+          <div className="hidden md:flex items-center gap-6">
+            {menuItems.map((item, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.07 }}
+                whileHover={{ y: -1 }}
+              >
+                <Link
+                  href={item.path}
+                  className={`relative text-sm font-medium transition-colors group ${
+                    pathname === item.path ? "text-purple-400" : "text-slate-400 hover:text-white"
+                  }`}
+                >
+                  {item.title}
+                  <span
+                    className={`absolute -bottom-1 left-0 h-px bg-gradient-to-r from-purple-500 to-cyan-400 transition-all duration-300 ${
+                      pathname === item.path ? "w-full" : "w-0 group-hover:w-full"
+                    }`}
+                  />
+                </Link>
+              </motion.div>
+            ))}
+
+            <motion.button
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              onClick={openWhatsApp}
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.95 }}
+              className="relative px-5 py-2 rounded-full text-sm font-semibold text-white overflow-hidden group"
+              style={{ background: "linear-gradient(135deg, #7C3AED, #22D3EE)" }}
+            >
+              <span className="relative z-10">Me Contrate</span>
+              <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+            </motion.button>
+          </div>
+
+          <button
+            className="md:hidden text-slate-400 hover:text-white transition-colors p-1"
+            aria-label="Abrir menu"
+            aria-expanded={isMenuOpen}
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            <motion.div animate={{ rotate: isMenuOpen ? 90 : 0 }} transition={{ duration: 0.2 }}>
+              {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
+            </motion.div>
+          </button>
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
+            className="md:hidden overflow-hidden px-6 pb-6"
+            style={{
+              background: "rgba(11,15,25,0.92)",
+              backdropFilter: "blur(20px)",
+              WebkitBackdropFilter: "blur(20px)",
+              borderBottom: "1px solid rgba(124,58,237,0.12)",
+            }}
+          >
+            <div className="pt-4 space-y-1">
+              {menuItems.map((item, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.04 }}
+                >
+                  <Link
+                    href={item.path}
+                    className={`block py-3 text-sm font-medium border-b transition-colors ${
+                      pathname === item.path ? "text-purple-400" : "text-slate-400"
+                    }`}
+                    style={{ borderColor: "rgba(124,58,237,0.08)" }}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.title}
+                  </Link>
+                </motion.div>
+              ))}
+              <button
+                onClick={() => { openWhatsApp(); setIsMenuOpen(false); }}
+                className="w-full mt-4 py-3 rounded-full text-sm font-semibold text-white"
+                style={{ background: "linear-gradient(135deg, #7C3AED, #22D3EE)" }}
+              >
+                Me Contrate
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </nav>
+  );
 }
