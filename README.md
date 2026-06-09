@@ -1,65 +1,137 @@
-# 🌐 Marcos Carvalho - Portfólio Profissional
+# 🚀 Marcos Carvalho | Portfólio Profissional
 
-![portfolio](https://github.com/user-attachments/assets/3d8e4f8b-ed12-47bd-8b7c-1d3e74e00a33)
+![Portfolio Preview](https://github.com/user-attachments/assets/96010ad5-f4dd-4705-974e-4606e7959567)
 
+## 👨‍💻 Sobre o Projeto
 
-Bem-vindo ao meu portfólio profissional, onde apresento meus projetos, tecnologias dominadas e minha trajetória como desenvolvedor focado em **frontend e mobile**.
+Este repositório contém meu portfólio profissional desenvolvido para apresentar minha trajetória, habilidades técnicas, projetos e experiências na área de desenvolvimento de software.
 
-## 🚀 Sobre
+O objetivo é demonstrar minhas competências em desenvolvimento Frontend, Mobile e criação de soluções tecnológicas com foco em experiência do usuário, acessibilidade e boas práticas de desenvolvimento.
 
-Sou Marcos Carvalho, estudante de Informática para Negócios com foco em desenvolvimento de soluções tecnológicas úteis, acessíveis e com impacto real. Este portfólio reflete minha dedicação em transformar desafios em oportunidades por meio da tecnologia.
+### 🔗 Acesse o Portfólio
 
-Acesse o projeto em produção:  
-👉 **[Abrir Portifólio!](https://marcoscarvalho.netlify.app/)**
-
-## 🛠️ Tecnologias Utilizadas
-
-- **React + Next.js**
-- **TypeScript**
-- **Tailwind CSS**
-- **Framer Motion**
-- **Lucide Icons**
-- **EmailJS**
-- **Netlify (Deploy)**
-
-## 📁 Estrutura do Projeto
-
-```
-
-/public
-/assets
-/components
-/pages
-/styles
-/lib/constants.ts
-
-````
-
-## 📸 Funcionalidades em Destaque
-
-- ✅ Interface moderna com animações suaves
-- ✅ Responsivo para dispositivos móveis
-- ✅ Seção de contato com envio de email
-- ✅ Animações com Framer Motion
-- ✅ Dados centralizados em constantes
-- ✅ Contador de experiências, projetos, commits e tecnologias
-
-## 💡 Como executar localmente
-
-```bash
-git clone https://github.com/gc-marcos/my-portfolio.git
-cd my-portfolio
-npm install
-npm run dev
-````
-
-Acesse em: `http://localhost:3000`
-
-## 📬 Contato
-
-📧 [Email](mailto:gcmarcoss@gmail.com)
-🔗 [LinkedIn](https://www.linkedin.com/in/gcmarcos)
+🌐 **https://marcoscarvalho.netlify.app/**
 
 ---
 
-Desenvolvido com ❤️ por Marcos Carvalho.
+## 🛠️ Tecnologias Utilizadas
+
+### Frontend
+
+* Next.js
+* React
+* TypeScript
+* Tailwind CSS
+* Framer Motion
+
+### Ferramentas e Integrações
+
+* EmailJS
+* Lucide React
+* Git & GitHub
+* Netlify
+
+---
+
+## ✨ Principais Funcionalidades
+
+* Interface moderna e responsiva
+* Animações fluidas com Framer Motion
+* Sessão de projetos com informações detalhadas
+* Formulário de contato integrado com EmailJS
+* Exibição de tecnologias e experiências
+* Estatísticas de projetos e atividades
+* Navegação otimizada para dispositivos móveis
+
+---
+
+## 📂 Estrutura do Projeto
+
+```bash
+src/
+├── app/
+├── components/
+├── data/
+├── hooks/
+├── lib/
+├── public/
+├── styles/
+└── utils/
+```
+
+---
+
+## 📱 Projetos em Destaque
+
+### EverNear
+
+Aplicativo Android integrado a smartwatch para monitoramento de sinais vitais em tempo real, com envio de alertas e localização para cuidadores em situações de emergência.
+
+### Android Match Simulator
+
+Aplicação Android desenvolvida utilizando arquitetura MVVM, ViewModel e LiveData para simulação de partidas esportivas.
+
+### Mine Game
+
+Jogo mobile desenvolvido em React Native com foco em lógica de programação e gerenciamento de estado.
+
+### HamburgueriaZ
+
+Sistema mobile desenvolvido em Java para gerenciamento de pedidos e experiência do usuário.
+
+---
+
+## 🚀 Executando Localmente
+
+Clone o repositório:
+
+```bash
+git clone https://github.com/gc-marcos/my-portfolio.git
+```
+
+Acesse a pasta:
+
+```bash
+cd my-portfolio
+```
+
+Instale as dependências:
+
+```bash
+npm install
+```
+
+Execute o projeto:
+
+```bash
+npm run dev
+```
+
+A aplicação estará disponível em:
+
+```bash
+http://localhost:3000
+```
+
+---
+
+## 📫 Contato
+
+📧 Email: [gcmarcoss@gmail.com](mailto:gcmarcoss@gmail.com)
+
+💼 LinkedIn:
+https://www.linkedin.com/in/gcmarcos
+
+🐙 GitHub:
+https://github.com/gc-marcos
+
+---
+
+## 📄 Licença
+
+Este projeto está disponível para fins de estudo, aprendizado e demonstração profissional.
+
+---
+
+Desenvolvido por Marcos Carvalho 🚀
+
